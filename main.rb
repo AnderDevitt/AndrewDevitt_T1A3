@@ -4,6 +4,8 @@ require "colorize"
 #define variables
 $prompt = TTY::Prompt.new
 
+target_exercises = []
+target_reps =[]
 #shows the main menu and returns the selected option
 def select_main_menu
     answer = $prompt.select("What would you like to do today?".colorize(:light_blue), ["Weekly goals", "Enter today's workout", "Check progress", "Review the week", "Exit"])
@@ -32,8 +34,6 @@ puts "Welcome to Small Steps workout motivator."
 
 
 option = ""
-goals = []
-reps =[]
 while option != "Exit"
     #invokes the menu and stores the option in the variable
     option = select_main_menu
@@ -41,10 +41,10 @@ while option != "Exit"
     case option
     when "Weekly goals"
         puts "Weekly goals selected"
-        goals = select_exercises
-        reps = set_reps(goals)
-        puts goals
-        puts reps
+        target_exercises = select_exercises
+        target_reps = set_reps(target_exercises)
+        puts target_exercises
+        puts target_reps
         #puts array
     when "Enter today's workout"
         puts "Entering the workout"
