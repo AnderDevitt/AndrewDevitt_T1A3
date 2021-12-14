@@ -84,7 +84,7 @@ while option != "Exit"
         day = $prompt.select("What day is it?".light_cyan, ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"])
         case day
         when "Monday"
-            mon << enter_workout(target_exercises)
+            mon = enter_workout(target_exercises)
             print "Monday: #{mon}"    
         when "Tuesday"
             tue << enter_workout(target_exercises)  
