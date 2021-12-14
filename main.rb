@@ -7,7 +7,13 @@ $prompt = TTY::Prompt.new
 #variables for user goals
 target_exercises = []
 target_reps =[]
-
+mon = []
+tue = []
+wed = []
+thu = []
+fri = []
+sat = []
+sun = []
 
 #shows the main menu and returns the selected option
 def select_main_menu
@@ -41,6 +47,7 @@ end
 def enter_workout(exercises)
     system = "clear"
     array = []
+    
     #loops through exercises and for each displays the prompt below
     exercises.each do |i|
         #prompt the user for the number of repetitions done today for an exercise. Displays error message if number not between 1 and 100
@@ -48,7 +55,7 @@ def enter_workout(exercises)
         #fills an array
         array << answer
     end
-    puts array
+    return array
 end
 
 system "clear"
@@ -72,7 +79,27 @@ while option != "Exit"
         #target.show_goals
         
     when "Enter today's workout"
-        enter_workout(target_exercises)
+
+        #check which day it is
+        day = $prompt.select("What day is it?".light_cyan, ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"])
+        case day
+        when "Monday"
+            mon << enter_workout(target_exercises)
+            print "Monday: #{mon}"    
+        when "Tuesday"
+            tue << enter_workout(target_exercises)  
+        when "Wednesday"
+            wed << enter_workout(target_exercises)  
+        when "Thursday"
+            thu << enter_workout(target_exercises)  
+        when "Friday"
+            fri << enter_workout(target_exercises)  
+        when "Saturday"
+            sat << enter_workout(target_exercises)  
+        when "Sunday"
+            sun << enter_workout(target_exercises)  
+        end
+        #enter_workout(target_exercises)
 
     when "Review the week"
         puts "congratulations!"
