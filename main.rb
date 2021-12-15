@@ -1,12 +1,14 @@
 require "tty-prompt"
 require "colorize"
-require_relative "./target.rb"
+#require_relative "./target.rb"
 
 #define variables
 $prompt = TTY::Prompt.new
 #variables for user goals
 target_exercises = []
 target_reps =[]
+#I should maybe replace these day arrays with a hash? keys are days and values are arrays of reps
+#I would also need a goal hash with the key goal and an array of reps numbers
 mon = []
 tue = []
 wed = []
@@ -24,8 +26,8 @@ end
 #selects the exercises the user wants to do
 def select_exercises
     system = "clear"
-    #display a multiple-choice menu of exercises
-    answer = $prompt.multi_select("Select the three exercises for this week.".colorize(:light_cyan), ["Pushups", "Tricep presses", "Situps", "Crunches", "Legraises", "Lunges", "Squats"])
+    #display a multiple-choice menu of exercises; space added to strings for formatting
+    answer = $prompt.multi_select("Select the three exercises for this week.".colorize(:light_cyan), ["Pushups   ", "Triceps   ", "Situps    ", "Crunches  ", "Leg-raises", "Lunges    ", "Squats    "])
     return answer
 end
 
@@ -36,9 +38,9 @@ def set_reps(goals)
     #loops through selected exercises and for each displays the prompt below
     goals.each do |i|
         #prompt the user for the number of repetitions for an exercise. Displays error message if number not between 1 and 100
-        answer = $prompt.ask("How many #{i} will you do each day: 1-100?".colorize(:light_cyan)) { |q| q.in("1-100") }
+        answer = $prompt.ask("How many #{i} will you do each day: ".colorize(:light_cyan) + "1-100?".colorize(:blue)) { |q| q.in("1-100") }
         #fills an array
-        array << answer
+        array << answer.to_i
     end
     return array
 end
@@ -51,9 +53,9 @@ def enter_workout(exercises)
     #loops through exercises and for each displays the prompt below
     exercises.each do |i|
         #prompt the user for the number of repetitions done today for an exercise. Displays error message if number not between 1 and 100
-        answer = $prompt.ask("How many #{i} did you do today: 1-100?".colorize(:light_cyan)) { |q| q.in("1-100") }
+        answer = $prompt.ask("How many #{i} did you do today: ".colorize(:light_cyan) + "1-100?".colorize(:blue)) { |q| q.in("1-100") }
         #fills an array
-        array << answer
+        array << answer.to_i
     end
     return array
 end
@@ -84,26 +86,27 @@ while option != "Exit"
         day = $prompt.select("What day is it?".light_cyan, ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"])
         case day
         when "Monday"
-            mon = enter_workout(target_exercises)
-            print "Monday: #{mon}"    
+            mon = enter_workout(target_exercises)   
         when "Tuesday"
-            tue << enter_workout(target_exercises)  
+            tue = enter_workout(target_exercises)  
         when "Wednesday"
-            wed << enter_workout(target_exercises)  
+            wed = enter_workout(target_exercises)  
         when "Thursday"
-            thu << enter_workout(target_exercises)  
+            thu = enter_workout(target_exercises)  
         when "Friday"
-            fri << enter_workout(target_exercises)  
-        when "Saturday"
-            sat << enter_workout(target_exercises)  
-        when "Sunday"
-            sun << enter_workout(target_exercises)  
+            fri = enter_workout(target_exercises)  
         end
         #enter_workout(target_exercises)
 
     when "Review the week"
         puts "congratulations!"
-    else
+        #test array contents
+        puts "Exercises: "+"| #{target_exercises[0]} "+"| #{target_exercises[1]} "+"| #{target_exercises[2]} |"
+        puts "Target:     "+"      #{target_reps[0]}   "+"      #{target_reps[1]}   "+"      #{target_reps[2]}   "
+        puts "-----------|------------|------------|------------|"
+        puts "Monday:     "+"      #{mon[0]}   "+"      #{mon[1]}   "+"      #{mon[2]}   "
+        puts "-----------|------------|------------|------------|"
+    else   
         system "clear"
         puts "See you next time..."    
         #skip the rest of the iteration and return to the top of the while loop
