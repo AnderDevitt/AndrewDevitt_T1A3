@@ -14,8 +14,7 @@ tue = []
 wed = []
 thu = []
 fri = []
-sat = []
-sun = []
+
 
 #shows the main menu and returns the selected option
 def select_main_menu
