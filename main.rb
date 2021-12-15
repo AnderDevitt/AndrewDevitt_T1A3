@@ -100,18 +100,17 @@ while option != "Exit"
     when "Review the week"
         puts "congratulations!"
         #test array contents
-        puts "Exercises: "+"| #{target_exercises[0]} "+"| #{target_exercises[1]} "+"| #{target_exercises[2]} |"
-        puts "Target:     "+"      #{target_reps[0]}   "+"      #{target_reps[1]}   "+"      #{target_reps[2]}   "
-        puts "-----------|------------|------------|------------|"
-        puts "Monday:     "+"      #{mon[0]}   "+"      #{mon[1]}   "+"      #{mon[2]}   "
-        puts "-----------|------------|------------|------------|"
+        #puts "Exercises: "+"| #{target_exercises[0]} "+"| #{target_exercises[1]} "+"| #{target_exercises[2]} |"
+        #puts "Target:     "+"      #{target_reps[0]}   "+"      #{target_reps[1]}   "+"      #{target_reps[2]}   "
+        #puts "-----------|------------|------------|------------|"
+        #puts "Monday:     "+"      #{mon[0]}   "+"      #{mon[1]}   "+"      #{mon[2]}   "
+        #puts "-----------|------------|------------|------------|"
     else   
         system "clear"
         puts "See you next time..."    
-        #skip the rest of the iteration and return to the top of the while loop
         next
     end
-    #this will stop the menu from appearing straight away after responding to an option choice
+    #stop the menu from appearing straight away after responding to an option choice
     print "Press Enter key to continue..."
     gets
     system "clear"
