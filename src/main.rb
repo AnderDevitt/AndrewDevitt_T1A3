@@ -10,13 +10,7 @@ font = TTY::Font.new(:doom)
 #variables for user goals
 target_exercises = [] 
 target_reps =[]         
-#I should maybe replace these day arrays with a hash? keys are days and values are arrays of reps
-#I would also need a goal hash with the key goal and an array of reps numbers
-mon = []
-tue = []
-wed = []
-thu = []
-fri = []
+
 
 
 #shows the main menu and returns the selected option
@@ -48,7 +42,7 @@ def set_reps(goals)
 end
 
 #enter the workout for the day
-def enter_workout(exercises)
+def enter_workout(day, exercises)
     system = "clear"
     array = []
     
@@ -59,7 +53,10 @@ def enter_workout(exercises)
         #fills an array
         array << answer.to_i
     end
-    return array
+    File.open("./saves/#{day}.txt", "w") do |f|
+        array.each { |element| f.puts(element) }
+    end
+    #return array
 end
 
 def review_week
@@ -85,21 +82,18 @@ while option != "Exit"
         target_reps = set_reps(target_exercises)
 
         #create a file to store an array for exercises
-        #File.open("./saves/exercises.txt", "w") do |f|     
-         #   f.write(target_exercises)   
-        #end
-        #create a file to store an array for target repetitions
-        #File.open("./saves/targets.txt", "w") do |f|     
-            #f.write(target_reps)   
-        #end
         File.open("./saves/exercises.txt", "w") do |f|
             target_exercises.each { |element| f.puts(element) }
         end
+        #create a file to store an array for target repetitions
         File.open("./saves/targets.txt", "w") do |f|
             target_reps.each { |element| f.puts(element) }
         end
 
     when "Enter today's workout"
+        # a blank array to hold return from enter_workout function
+        reps_array = []
+
         #open the exercises file and read the exercises into an array
         file = File.open("./saves/exercises.txt")
         exercises_array=[] # start with an empty array
@@ -109,18 +103,19 @@ while option != "Exit"
 
         #check which day it is
         day = $prompt.select("What day is it?".light_cyan, ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"])
+        
+        #for each day, pass the exercises_array to the function, return the value to a temporary array, and write the data to a file for that day
         case day
-            #for each day, pass the exercises_array to the function and create a new array with day's reps
         when "Monday"
-            mon = enter_workout(exercises_array)   
+            reps_array = enter_workout("mon", exercises_array)    
         when "Tuesday"
-            tue = enter_workout(exercises_array)  
+            reps_array = enter_workout("tue", exercises_array) 
         when "Wednesday"
-            wed = enter_workout(exercises_array)  
+            reps_array = enter_workout("wed", exercises_array)  
         when "Thursday"
-            thu = enter_workout(exercises_array)  
+            reps_array = enter_workout("thu", exercises_array)   
         when "Friday"
-            fri = enter_workout(exercises_array)  
+            reps_array = enter_workout("fri", exercises_array) 
         end
 
     when "Review the week"
