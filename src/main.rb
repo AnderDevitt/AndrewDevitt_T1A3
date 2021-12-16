@@ -84,13 +84,23 @@ while option != "Exit"
         #get number of repetitions user will aim for from function
         target_reps = set_reps(target_exercises)
 
-        
+        #create a file to store an array for exercises
+        File.open("./saves/exercises.txt", "w") do |f|     
+            f.write(target_exercises)   
+        end
+        #create a file to store an array for target repetitions
+        File.open("./saves/targets.txt", "w") do |f|     
+            f.write(target_reps)   
+        end
         
     when "Enter today's workout"
         #check which day it is
         day = $prompt.select("What day is it?".light_cyan, ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"])
         case day
         when "Monday"
+            #open the exercises file and read the exercises
+
+            #pass the exercises to the function
             mon = enter_workout(target_exercises)   
         when "Tuesday"
             tue = enter_workout(target_exercises)  
