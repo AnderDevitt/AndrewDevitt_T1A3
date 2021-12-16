@@ -2,7 +2,7 @@ require "tty-prompt"
 require "colorize"
 require "tty-font"
 #require_relative "./target.rb"
-require_relative "./set_goals.rb"
+require_relative "./functions.rb"
 
 #define variables
 $prompt = TTY::Prompt.new
@@ -13,37 +13,7 @@ target_exercises = []
 target_reps =[]         
 
 
-#shows the main menu and returns the selected option
-def select_main_menu
-    puts ""
-    answer = $prompt.select("What would you like to do today?".colorize(:light_cyan), ["Set my goals", "Enter today's workout", "Review the week", "Exit"])
-    return answer
-end
 
-#removed select_exercises and set_reps functions from here and put in set_goals.rb
-
-#enter the workout for the day
-def enter_workout(day, exercises)
-    system = "clear"
-    array = []
-    
-    #loops through exercises and for each displays the prompt below
-    exercises.each do |i|
-        puts ""
-        #prompt the user for the number of repetitions done today for an exercise. Displays error message if number not between 1 and 100
-        answer = $prompt.ask("How many #{i} did you do today: ".colorize(:light_cyan) + "1-100?".colorize(:blue)) { |q| q.in("1-100") }
-        #fills an array
-        array << answer.to_i
-    end
-    File.open("./saves/#{day}.txt", "w") do |f|
-        array.each { |element| f.puts(element) }
-    end
-    #return array
-end
-
-def review_week
-    puts "congratulations!"
-end
 
 system "clear"
 puts font.write("Small Steps")

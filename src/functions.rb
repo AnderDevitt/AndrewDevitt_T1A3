@@ -2,6 +2,13 @@
 #variables
 #$prompt = TTY::Prompt.new
 
+#shows the main menu and returns the selected option
+def select_main_menu
+    puts ""
+    answer = $prompt.select("What would you like to do today?".colorize(:light_cyan), ["Set my goals", "Enter today's workout", "Review the week", "Exit"])
+    return answer
+end
+
 #selects the exercises the user wants to do
 def select_exercises
     #system = "clear"
@@ -24,4 +31,26 @@ def set_reps(goals)
         array << answer.to_i
     end
     return array
+end
+#enter the workout for the day
+def enter_workout(day, exercises)
+    system = "clear"
+    array = []
+    
+    #loops through exercises and for each displays the prompt below
+    exercises.each do |i|
+        puts ""
+        #prompt the user for the number of repetitions done today for an exercise. Displays error message if number not between 1 and 100
+        answer = $prompt.ask("How many #{i} did you do today: ".colorize(:light_cyan) + "1-100?".colorize(:blue)) { |q| q.in("1-100") }
+        #fills an array
+        array << answer.to_i
+    end
+    File.open("./saves/#{day}.txt", "w") do |f|
+        array.each { |element| f.puts(element) }
+    end
+    #return array
+end
+
+def review_week
+    puts "congratulations!"
 end
