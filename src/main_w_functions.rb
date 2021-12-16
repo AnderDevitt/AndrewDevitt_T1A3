@@ -14,17 +14,19 @@ target_reps =[]
 
 
 
-
+#----------------------------------------Greeting on Program Start-------------------------------------------
 system "clear"
 puts font.write("Small Steps")
 puts "" 
 puts "Welcome to the Small Steps workout motivator."
 puts ""
 
-
+#---------------------------------------Main Menu and core program------------------------------------------
 option = ""
+
 while option != "Exit"
     #invokes the menu and stores the option in the variable
+  
     option = select_main_menu
 
     #case statement to handle the options of the menu
