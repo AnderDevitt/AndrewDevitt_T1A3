@@ -85,31 +85,42 @@ while option != "Exit"
         target_reps = set_reps(target_exercises)
 
         #create a file to store an array for exercises
-        File.open("./saves/exercises.txt", "w") do |f|     
-            f.write(target_exercises)   
-        end
+        #File.open("./saves/exercises.txt", "w") do |f|     
+         #   f.write(target_exercises)   
+        #end
         #create a file to store an array for target repetitions
-        File.open("./saves/targets.txt", "w") do |f|     
-            f.write(target_reps)   
+        #File.open("./saves/targets.txt", "w") do |f|     
+            #f.write(target_reps)   
+        #end
+        File.open("./saves/exercises.txt", "w") do |f|
+            target_exercises.each { |element| f.puts(element) }
         end
-        
-    when "Enter today's workout"
-        #check which day it is
-        day = $prompt.select("What day is it?".light_cyan, ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"])
-        case day
-        when "Monday"
-            #open the exercises file and read the exercises
+        File.open("./saves/targets.txt", "w") do |f|
+            target_reps.each { |element| f.puts(element) }
+        end
 
-            #pass the exercises to the function
-            mon = enter_workout(target_exercises)   
+    when "Enter today's workout"
+        #open the exercises file and read the exercises into an array
+        file = File.open("./saves/exercises.txt")
+        exercises_array=[] # start with an empty array
+        file.each_line {|line|
+            exercises_array.push line
+        }
+
+        #check which day it is
+        day = $prompt.select("What day is it?".light_cyan, ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"])
+        case day
+            #for each day, pass the exercises_array to the function and create a new array with day's reps
+        when "Monday"
+            mon = enter_workout(exercises_array)   
         when "Tuesday"
-            tue = enter_workout(target_exercises)  
+            tue = enter_workout(exercises_array)  
         when "Wednesday"
-            wed = enter_workout(target_exercises)  
+            wed = enter_workout(exercises_array)  
         when "Thursday"
-            thu = enter_workout(target_exercises)  
+            thu = enter_workout(exercises_array)  
         when "Friday"
-            fri = enter_workout(target_exercises)  
+            fri = enter_workout(exercises_array)  
         end
 
     when "Review the week"
