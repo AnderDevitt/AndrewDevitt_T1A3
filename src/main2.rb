@@ -1,6 +1,7 @@
 require "tty-prompt"
 require "colorize"
 require "tty-font"
+require 'fileutils'
 #require_relative "./target.rb"
 #require_relative "./functions.rb"
 
@@ -22,6 +23,10 @@ end
 
 #selects the exercises the user wants to do
 def select_exercises
+
+    #delete old save files so no old data is carried into a new week
+    FileUtils.rm_rf(Dir['./saves/*'])
+
     #space 
     puts ""
 
