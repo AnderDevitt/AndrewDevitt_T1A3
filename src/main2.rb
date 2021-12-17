@@ -83,10 +83,13 @@ def review_week
     #array = Dir[ './saves/*' ].select{ |f| File.file? f }.map{ |f| File.basename f }
     #print array
 
-    arr = [{Ex: "ex1", Go: "20", Mon: "3", Tue: "3", Wed: "3", Thu: "3", Fri: "3"},
-        {Ex: "ex2", Go: "12", Mon: "12", Tue: "12", Wed: "12", Thu: "12", Fri: "12"},
-        {Ex: "ex3", Go: "4", Mon: "4", Tue: "5", Wed: "5", Thu: "5", Fri: "5"}]
+    arr = [{Ex: "Pushups", Go: "15", Mon: "9", Tue: "9", Wed: "10", Thu: "13", Fri: "15"},
+        {Ex: "Situps", Go: "20", Mon: "20", Tue: "20", Wed: "20", Thu: "20", Fri: "20"},
+        {Ex: "Leg-raises", Go: "20", Mon: "18", Tue: "15", Wed: "20", Thu: "23", Fri: "20"}]
         
+        # arr = [{Ex: "Pushups", Go: "15".colorize(:yellow), Mon: "9", Tue: "9", Wed: "10", Thu: "13", Fri: "15"},
+        #     {Ex: "Situps", Go: "20".colorize(:yellow), Mon: "20", Tue: "20", Wed: "20", Thu: "20", Fri: "20"},
+        #     {Ex: "Leg-raises", Go: "20".colorize(:yellow), Mon: "18", Tue: "15", Wed: "20", Thu: "23", Fri: "20"}]
     #FOLLOWING 30 LINES TO CREATE A TABLE FROM: https://stackoverflow.com/questions/28684598/print-an-array-into-a-table-in-ruby
     col_labels = { Ex: "Exercises", Go: "My Goals", Mon: "Monday", Tue: "Tuesday", Wed: "Wednesday", Thu: "Thursday", Fri: "Friday" }
 
@@ -129,41 +132,48 @@ def review_week
 
 end
 
-#option = "Set my goals" if ARGV[0] == "goals"
-#option = "Enter today's workout" if ARGV[0] == "workout"
-
-option = ""
-while option != "Exit"
-
-    #display app heading and greeting on every screen
-    system "clear"
-    puts font.write("Small Steps")
-    puts "" 
-    puts "Welcome to the Small Steps workout motivator."
-    puts ""
-
-    #invokes the menu and stores the option in the variable
-    option = select_main_menu()
-    #case statement to handle the options of the menu
-    case option
-    when "Set my goals"
-        #call a function to choose exercises and target repetitions
-        select_exercises()
-    when "Enter today's workout"
-        #call a function to enter the day and reps completed
-        enter_workout()
-    when "Review the week"
-        #call a function to display all data for the week in a table
-        review_week()
-    else   
+#accept and handle command line arguments
+# Allows for quick access to individual functions without running the whole program
+if ARGV[0] == "goals"
+    select_exercises()
+elsif ARGV[0] == "workout"
+    enter_workout()
+elsif ARGV[0] == "results"
+    review_week()
+else
+    #display the main menu and program operation as usual
+    option = ""
+    while option != "Exit"
+        #display app heading and greeting on every screen
         system "clear"
-        puts "See you next time..."    
-        next
+        puts font.write("Small Steps")
+        puts "" 
+        puts "Welcome to the Small Steps workout motivator."
+        puts ""
+
+        #invokes the menu and stores the option in the variable
+        option = select_main_menu()
+        #case statement to handle the options of the menu
+        case option
+            when "Set my goals"
+                #call a function to choose exercises and target repetitions
+                select_exercises()
+            when "Enter today's workout"
+                #call a function to enter the day and reps completed
+                enter_workout()
+            when "Review the week"
+                #call a function to display all data for the week in a table
+                review_week()
+            else   
+                system "clear"
+                puts "See you next time..."    
+            next
+        end
+        #stop the menu from appearing straight away after responding to an option choice
+        puts ""
+        puts ""
+        print "Press any key to continue..."
+        STDIN.getch
+        system "clear"
     end
-    #stop the menu from appearing straight away after responding to an option choice
-    puts ""
-    puts ""
-    print "Press Enter key to continue..."
-    gets
-    system "clear"
 end
