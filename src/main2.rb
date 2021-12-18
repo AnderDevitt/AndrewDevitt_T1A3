@@ -3,6 +3,7 @@ require "colorize"
 require "tty-font"
 require 'fileutils'
 require 'tty-table'
+require "pp"
 #require_relative "./target.rb"
 #require_relative "./functions.rb"
 
@@ -84,7 +85,7 @@ def enter_workout()
 end
 
 def review_week
-    columns = []
+    arr = []
     #get the names of files in the save directory
     file_array = Dir[ './saves/*' ].select{ |f| File.file? f }.map{ |f| File.basename f}
     sort_order = ["Exercise.txt", "Goal.txt", "Monday.txt", "Tuesday.txt", "Wednesday.txt", "Thursday.txt", "Friday.txt"]
@@ -106,16 +107,54 @@ def review_week
     file = File.open("./saves/#{x}.txt")
     new_array=[] # start with an empty array
     file.each_line {|line|
-        new_array.push line
+        new_array.push line.chomp("\n")
     }
-    columns << new_array
+    arr << new_array
     end
    
-    table = TTY::Table.new([headings])
-    puts ""
-    print columns
+    #table = TTY::Table.new([headings])
+    #puts ""
+    #col_labels = headings.to_h#date: "Date", from: "From", subject: "Subject" }
+    
+    #make a hash for column labels from my headings array
+    col_labels = {}
+    headings.each do |i|
+        col_labels[i] = i
+    end
+
+    print col_labels
+    @columns = col_labels.each_with_object({}) { |(col,label),h|
+        h[col] = { label: label,
+                   width: [arr.map { |g| g[col].size }.max, label.size].max } }
+    
+    def write_header
+        puts "| #{ @columns.map { |_,g| g[:label].ljust(g[:width]) }.join(' | ') } |"
+    end
+                  
+    def write_divider
+        puts "+-#{ @columns.map { |_,g| "-"*g[:width] }.join("-+-") }-+"
+    end
+                  
+    def write_line(h)
+        str = h.keys.map { |k| h[k].ljust(@columns[k][:width]) }.join(" | ")
+        puts "| #{str} |"
+    end
+    
+     write_divider
+    write_header
+    write_divider
+    arr.each { |h| write_line(h) }
+    write_divider
+                  
+
+
+
+
+
+
+    #print columns
     #table = TTY::Table.new(headings, [exercises_array, ["b1", "b2"]])
-    puts table.render(:ascii)
+    #puts table.render(:ascii)
     
     # #open the targets file and read the exercises into an array
     # file = File.open("./saves/targets.txt")
