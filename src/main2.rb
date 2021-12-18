@@ -102,35 +102,33 @@ def review_week
     new_array=[] # start with an empty array
     file.each_line {|line|
         new_array.push line.chomp("\n")
-        #combined_hash = Hash[headings.zip(new_array)]
-        #print new_array
-        #puts ""
     }
     read_array << new_array
     end
-    puts "transpose() method form : #{read_array.transpose()}\n\n"
-    
+    arr = read_array.transpose()
+    #puts arr
+     
     #make a hash of the arrays headings and columns
     #https://medium.com/@alinaarakelyan/ruby-combing-two-arrays-into-a-hash-3d4f1c6bcf67
     # combined_hash = {} 
-#     test_arr = []
-#     final = []
-#     read_array.each do |sub_array|
-#         sub_array.each do |element|
-#           #combined_hash = Hash[headings.zip(element)]
-#         element.each do 
-#           test_arr << element
-#         combined_hash = Hash[headings.zip(test_arr)]
-#         print test_arr
-#         end
-#         puts ""
-#         end
-#       #  final << combined_hash
-#       end
-#     #c
-#     puts""
-#     puts ""
-#    print final
+    
+    final = []
+    arr.each do |sub_array|
+        sub_array.each do #|element|
+          #combined_hash = Hash[headings.zip(element)]
+        #element.each do 
+         # test_arr << element
+        combined_hash = Hash[headings.zip(sub_array)]
+        #print test_arr
+        end
+        #puts ""
+        
+        final << combined_hash
+      end
+    #c
+    puts""
+    puts ""
+   print final
 
     #table = TTY::Table.new([headings])
     # puts ""
