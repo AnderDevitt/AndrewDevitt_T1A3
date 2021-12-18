@@ -13,3 +13,5 @@ gem "tty-prompt", "~> 0.23.1"
 gem "rspec"
 
 gem "tty-font"
+
+gem "tty-table"
