@@ -86,6 +86,7 @@ end
 
 def review_week
     arr = []
+    read_array =[]
     #get the names of files in the save directory
     file_array = Dir[ './saves/*' ].select{ |f| File.file? f }.map{ |f| File.basename f}
     sort_order = ["Exercise.txt", "Goal.txt", "Monday.txt", "Tuesday.txt", "Wednesday.txt", "Thursday.txt", "Friday.txt"]
@@ -94,59 +95,92 @@ def review_week
     #headings = []
     headings = file_array.map{|i| i.chomp(".txt")}
     
-    
-    #array = Dir[ './saves/*' ].select{ |f| File.file? f }.map{ |f| File.basename f.chomp(".txt")}
-    
-    
-
-
+    combined_hash ={}
     headings.each do |x|
-    
     #open the exercises file and read the exercises into an array
-    
     file = File.open("./saves/#{x}.txt")
     new_array=[] # start with an empty array
     file.each_line {|line|
         new_array.push line.chomp("\n")
+        #combined_hash = Hash[headings.zip(new_array)]
+        #print new_array
+        #puts ""
     }
-    arr << new_array
+    read_array << new_array
     end
-   
+    puts "transpose() method form : #{read_array.transpose()}\n\n"
+    
+    #make a hash of the arrays headings and columns
+    #https://medium.com/@alinaarakelyan/ruby-combing-two-arrays-into-a-hash-3d4f1c6bcf67
+    # combined_hash = {} 
+#     test_arr = []
+#     final = []
+#     read_array.each do |sub_array|
+#         sub_array.each do |element|
+#           #combined_hash = Hash[headings.zip(element)]
+#         element.each do 
+#           test_arr << element
+#         combined_hash = Hash[headings.zip(test_arr)]
+#         print test_arr
+#         end
+#         puts ""
+#         end
+#       #  final << combined_hash
+#       end
+#     #c
+#     puts""
+#     puts ""
+#    print final
+
+    #table = TTY::Table.new([headings])
+    # puts ""
+    # print combined_hash
+    # arr = [{date: "2014-12-01", from: "Ferdous", subject: "Homework this week"},
+    #     {date: "2014-12-01", from: "Dajana", subject: "Keep on coding! :)"},
+    #     {date: "2014-12-02", from: "Ariane", subject: "Re: Homework this week"}]
     #table = TTY::Table.new([headings])
     #puts ""
     #col_labels = headings.to_h#date: "Date", from: "From", subject: "Subject" }
     
     #make a hash for column labels from my headings array
-    col_labels = {}
+    col_headings = {}
     headings.each do |i|
-        col_labels[i] = i
+        col_headings[i] = i
     end
+    print col_headings
 
-    print col_labels
-    @columns = col_labels.each_with_object({}) { |(col,label),h|
-        h[col] = { label: label,
-                   width: [arr.map { |g| g[col].size }.max, label.size].max } }
-    
-    def write_header
-        puts "| #{ @columns.map { |_,g| g[:label].ljust(g[:width]) }.join(' | ') } |"
-    end
-                  
-    def write_divider
-        puts "+-#{ @columns.map { |_,g| "-"*g[:width] }.join("-+-") }-+"
-    end
-                  
-    def write_line(h)
-        str = h.keys.map { |k| h[k].ljust(@columns[k][:width]) }.join(" | ")
-        puts "| #{str} |"
-    end
-    
-     write_divider
-    write_header
-    write_divider
-    arr.each { |h| write_line(h) }
-    write_divider
-                  
+    #print col_labels
+    col_labels = { date: "Date", from: "From", subject: "Subject" }
 
+    arr = [{date: "2014-12-01", from: "Ferdous", subject: "Homework this week"},
+        {date: "2014-12-01", from: "Dajana", subject: "Keep on coding! :)"},
+        {date: "2014-12-02", from: "Ariane", subject: "Re: Homework this week"}]
+                  
+        @columns = col_labels.each_with_object({}) { |(col,label),h|
+            h[col] = { label: label,
+                       width: [arr.map { |g| g[col].size }.max, label.size].max } }
+            # => {:date=>    {:label=>"Date",    :width=>10},
+            #     :from=>    {:label=>"From",    :width=>7},
+            #     :subject=> {:label=>"Subject", :width=>22}}
+          
+          def write_header
+            puts "| #{ @columns.map { |_,g| g[:label].ljust(g[:width]) }.join(' | ') } |"
+          end
+          
+          def write_divider
+            puts "+-#{ @columns.map { |_,g| "-"*g[:width] }.join("-+-") }-+"
+          end
+          
+          def write_line(h)
+            str = h.keys.map { |k| h[k].ljust(@columns[k][:width]) }.join(" | ")
+            puts "| #{str} |"
+          end
+        #   write_divider
+        #   write_header
+        #   write_divider
+        #   arr.each { |h| write_line(h) }
+        #   write_divider
+          
 
 
 
