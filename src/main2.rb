@@ -105,7 +105,7 @@ def review_week
     }
     read_array << new_array
     end
-    arr = read_array.transpose()
+    transposed_arr = read_array.transpose()
     #puts arr
      
     #make a hash of the arrays headings and columns
@@ -113,7 +113,7 @@ def review_week
     # combined_hash = {} 
     
     final = []
-    arr.each do |sub_array|
+    transposed_arr.each do |sub_array|
         sub_array.each do #|element|
           #combined_hash = Hash[headings.zip(element)]
         #element.each do 
@@ -123,12 +123,12 @@ def review_week
         end
         #puts ""
         
-        final << combined_hash
+        arr << combined_hash
       end
     #c
     puts""
     puts ""
-   print final
+   #print arr
 
     #table = TTY::Table.new([headings])
     # puts ""
@@ -145,16 +145,16 @@ def review_week
     headings.each do |i|
         col_headings[i] = i
     end
-    print col_headings
+    #print col_headings
 
     #print col_labels
-    col_labels = { date: "Date", from: "From", subject: "Subject" }
+    # col_labels = { date: "Date", from: "From", subject: "Subject" }
 
-    arr = [{date: "2014-12-01", from: "Ferdous", subject: "Homework this week"},
-        {date: "2014-12-01", from: "Dajana", subject: "Keep on coding! :)"},
-        {date: "2014-12-02", from: "Ariane", subject: "Re: Homework this week"}]
+    # arr = [{date: "2014-12-01", from: "Ferdous", subject: "Homework this week"},
+    #     {date: "2014-12-01", from: "Dajana", subject: "Keep on coding! :)"},
+    #     {date: "2014-12-02", from: "Ariane", subject: "Re: Homework this week"}]
                   
-        @columns = col_labels.each_with_object({}) { |(col,label),h|
+        @columns = col_headings.each_with_object({}) { |(col,label),h|
             h[col] = { label: label,
                        width: [arr.map { |g| g[col].size }.max, label.size].max } }
             # => {:date=>    {:label=>"Date",    :width=>10},
@@ -173,11 +173,11 @@ def review_week
             str = h.keys.map { |k| h[k].ljust(@columns[k][:width]) }.join(" | ")
             puts "| #{str} |"
           end
-        #   write_divider
-        #   write_header
-        #   write_divider
-        #   arr.each { |h| write_line(h) }
-        #   write_divider
+          write_divider
+          write_header
+          write_divider
+          arr.each { |h| write_line(h) }
+          write_divider
           
 
 
