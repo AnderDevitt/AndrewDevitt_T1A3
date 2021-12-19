@@ -25,9 +25,14 @@ end
 
 #selects the exercises the user wants to do and sets their target repetitions
 def select_exercises
-
-    #delete old save files so no old data is carried into a new week
-    FileUtils.rm_rf(Dir['./saves/*'])
+    system "clear"
+    #Ask the user whether they wish to delete save files to begin a new week. If they choose no, they can overwrite the exercises and goals, but workout files will remain.
+    delete = false
+    delete = $prompt.yes?("Would you like to delete the save data and start a new week?")
+    if delete == true
+        #delete old save files so no old data is carried into a new week
+        FileUtils.rm_rf(Dir['./saves/*'])
+    end
 
     #space 
     puts ""
@@ -57,19 +62,19 @@ end
 
 #enter the workout for the day
 def enter_workout()
-    system = "clear"
+    system "clear"
     array = []
     
     #check which day it is
     day = $prompt.select("What day is it?".light_cyan, ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"])
-
+        
     #open the exercises file and read the exercises into an array
     file = File.open("./saves/Exercise.txt")
     exercises_array=[] # start with an empty array
     file.each_line {|line|
         exercises_array.push line
     }
-
+      
     #loops through exercises and for each displays the prompt below
     exercises_array.each do |i|
         puts ""
@@ -78,10 +83,11 @@ def enter_workout()
         #fills an array
         array << answer.to_i
     end
+
+    #create a file to save the data for this day with the nameof the day as the file name
     File.open("./saves/#{day}.txt", "w") do |f|
         array.each { |element| f.puts(element) }
-    end
-    #return array
+    end  
 end
 
 def review_week
@@ -181,14 +187,37 @@ else
                 #call a function to choose exercises and target repetitions
                 select_exercises()
             when "Enter today's workout"
-                #call a function to enter the day and reps completed
-                enter_workout()
+                #Ruby function to check file existence
+                if(File.file?("./saves/Exercise.txt")) 
+                    #call a function to enter the day and reps completed
+                    enter_workout()
+                else
+                    #if the exercise.txt file is missing the function cannot be used and user should be directed to the enter goals function to create one  
+                    puts "Exercise.txt file not found.".colorize(:yellow)
+                    puts ""
+                    puts ""
+                    puts "Please set your exercise goals for the week before entering a workout for a day.".colorize(:light_cyan) 
+                end
             when "Review the week"
-                #call a function to display all data for the week in a table
-                review_week()
+                #Ruby function to check file existence
+                if(File.file?("./saves/Exercise.txt")) 
+                    #call a function to display all data for the week in a table
+                    review_week()
+                else
+                    #if the exercise.txt file is missing the function cannot be used  
+                    puts ""
+                    puts ""
+                    puts "Exercise.txt file not found.".colorize(:yellow)
+                    puts ""
+                    puts ""
+                    puts "You cannot review the week without having set your exercises and goals".colorize(:light_cyan)
+                    puts "Please set your goals to continue".colorize(:light_cyan) 
+                end    
             else   
                 system "clear"
-                puts "See you next time..."    
+                puts "See you next time..."  
+                puts ""
+                puts ""  
             next
         end
         #stop the menu from appearing straight away after responding to an option choice
