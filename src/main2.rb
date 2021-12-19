@@ -8,13 +8,13 @@ require "pp"
 #require_relative "./functions.rb"
 
 #define variables
+#currently I need this prompt to be a global variable to save me calling multiple prompt instances
 $prompt = TTY::Prompt.new
 #give me a cool font for style
 font = TTY::Font.new(:doom)
 #variables for user goals
 target_exercises = [] 
 target_reps =[]         
-#hash = {:Exercise => [], :Goal => [], :Monday => [], :Tuesday => [], :Wednesday => [], Thursday => [], :Friday => []}
 
 #shows the main menu and returns the selected option
 def select_main_menu
@@ -23,7 +23,7 @@ def select_main_menu
     return answer
 end
 
-#selects the exercises the user wants to do
+#selects the exercises the user wants to do and sets their target repetitions
 def select_exercises
 
     #delete old save files so no old data is carried into a new week
@@ -33,7 +33,7 @@ def select_exercises
     puts ""
 
     #display a multiple-choice menu of exercises and saves choices to a file
-    exercise = $prompt.multi_select("Select the three exercises for this week.".colorize(:light_cyan), ["Pushups", "Tricep pressess", "Situps", "Crunches", "Leg-raises", "Lunges", "Squats"])
+    exercise = $prompt.multi_select("Select the exercises you would like to do this week.".colorize(:light_cyan), ["Pushups", "Tricep pressess", "Situps", "Crunches", "Leg-raises", "Lunges", "Squats"])
     #create a file to store an array for exercises
     File.open("./saves/Exercise.txt", "w") do |f|
         exercise.each { |element| f.puts(element) }
@@ -106,94 +106,52 @@ def review_week
     read_array << new_array
     end
     transposed_arr = read_array.transpose()
-    #puts arr
+    
      
     #make a hash of the arrays headings and columns
+    #Code source used to learn how to do this 
     #https://medium.com/@alinaarakelyan/ruby-combing-two-arrays-into-a-hash-3d4f1c6bcf67
-    # combined_hash = {} 
-    
     final = []
     transposed_arr.each do |sub_array|
         sub_array.each do #|element|
-          #combined_hash = Hash[headings.zip(element)]
-        #element.each do 
-         # test_arr << element
         combined_hash = Hash[headings.zip(sub_array)]
-        #print test_arr
-        end
-        #puts ""
-        
+        end    
         arr << combined_hash
       end
-    #c
+    
     puts""
     puts ""
-   #print arr
-
-    #table = TTY::Table.new([headings])
-    # puts ""
-    # print combined_hash
-    # arr = [{date: "2014-12-01", from: "Ferdous", subject: "Homework this week"},
-    #     {date: "2014-12-01", from: "Dajana", subject: "Keep on coding! :)"},
-    #     {date: "2014-12-02", from: "Ariane", subject: "Re: Homework this week"}]
-    #table = TTY::Table.new([headings])
-    #puts ""
-    #col_labels = headings.to_h#date: "Date", from: "From", subject: "Subject" }
     
     #make a hash for column labels from my headings array
     col_headings = {}
     headings.each do |i|
         col_headings[i] = i
     end
-    #print col_headings
-
-    #print col_labels
-    # col_labels = { date: "Date", from: "From", subject: "Subject" }
-
-    # arr = [{date: "2014-12-01", from: "Ferdous", subject: "Homework this week"},
-    #     {date: "2014-12-01", from: "Dajana", subject: "Keep on coding! :)"},
-    #     {date: "2014-12-02", from: "Ariane", subject: "Re: Homework this week"}]
-                  
-        @columns = col_headings.each_with_object({}) { |(col,label),h|
-            h[col] = { label: label,
-                       width: [arr.map { |g| g[col].size }.max, label.size].max } }
-            # => {:date=>    {:label=>"Date",    :width=>10},
-            #     :from=>    {:label=>"From",    :width=>7},
-            #     :subject=> {:label=>"Subject", :width=>22}}
-          
-          def write_header
-            puts "| #{ @columns.map { |_,g| g[:label].ljust(g[:width]) }.join(' | ') } |"
-          end
-          
-          def write_divider
-            puts "+-#{ @columns.map { |_,g| "-"*g[:width] }.join("-+-") }-+"
-          end
-          
-          def write_line(h)
-            str = h.keys.map { |k| h[k].ljust(@columns[k][:width]) }.join(" | ")
-            puts "| #{str} |"
-          end
-          write_divider
-          write_header
-          write_divider
-          arr.each { |h| write_line(h) }
-          write_divider
-          
-
-
-
-
-
-    #print columns
-    #table = TTY::Table.new(headings, [exercises_array, ["b1", "b2"]])
-    #puts table.render(:ascii)
     
-    # #open the targets file and read the exercises into an array
-    # file = File.open("./saves/targets.txt")
-    # targets_array=[] # start with an empty array
-    # file.each_line {|line|
-    #     targets_array.push line
-    # }
+    #Turn my headings hash and array of hashes into a table for display
+    #Code source that helped me work this out 
+    #https://stackoverflow.com/questions/28684598/print-an-array-into-a-table-in-ruby
+    @columns = col_headings.each_with_object({}) { |(col,label),h|
+        h[col] = { label: label, width: [arr.map { |g| g[col].size }.max, label.size].max } }
+            
+    def write_header
+        puts "| #{ @columns.map { |_,g| g[:label].ljust(g[:width]) }.join(' | ') } |"
+    end
+          
+    def write_divider
+        puts "+-#{ @columns.map { |_,g| "-"*g[:width] }.join("-+-") }-+"
+    end
+          
+    def write_line(h)
+        str = h.keys.map { |k| h[k].ljust(@columns[k][:width]) }.join(" | ")
+        puts "| #{str} |"
+    end
+        
+    write_divider
+    write_header
+    write_divider
+    arr.each { |h| write_line(h) }
+    write_divider
 end
 
 #accept and handle command line arguments
