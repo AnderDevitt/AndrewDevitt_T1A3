@@ -1,6 +1,6 @@
 def review_week
   system "clear"
-  puts font.write("Small Steps").colorize(:yellow) 
+  puts $font.write("Small Steps").colorize(:yellow) 
         puts "" 
         puts "Welcome to the Small Steps workout motivator."
         puts ""

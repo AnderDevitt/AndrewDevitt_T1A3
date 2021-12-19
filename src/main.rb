@@ -14,7 +14,7 @@ require_relative "./main_menu.rb"
 #currently I need this prompt to be a global variable to save me calling multiple prompt instances
 $prompt = TTY::Prompt.new
 #give me a cool font for style
-font = TTY::Font.new(:doom)
+$font = TTY::Font.new(:doom)
 
 #accept and handle command line arguments
 # Allows for quick access to individual functions without running the whole program
@@ -30,7 +30,7 @@ else
     while option != "Exit"
         #display app heading and greeting on every screen
         system "clear"
-        puts font.write("Small Steps").colorize(:yellow) 
+        puts $font.write("Small Steps").colorize(:yellow) 
         puts "" 
         puts "Welcome to the Small Steps workout motivator."
         puts ""
