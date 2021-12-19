@@ -22,7 +22,7 @@ def enter_workout()
         puts ""
         #-------------------------------------------------------------ERROR HANDLING is included in the prompt
         #prompt the user for the number of repetitions done today for an exercise. Displays error message if number not between 1 and 100
-        answer = $prompt.ask("How many #{i} did you do today: ".colorize(:light_cyan) + "1-100?".colorize(:blue)) { |q| q.in("1-100") }
+        answer = $prompt.ask("How many #{i} did you do today: ".colorize(:light_cyan) + "0-300?".colorize(:blue)) { |q| q.in("0-300") }
         #fills an array
         array << answer.to_i
     end

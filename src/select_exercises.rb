@@ -37,7 +37,7 @@ def select_exercises
             puts ""
             #-------------------------------------------------------------ERROR HANDLING is included in the prompt
             #prompt the user for the number of repetitions for an exercise. Displays error message if number not between 1 and 100
-            reps = $prompt.ask("How many #{i} will you do each day: ".colorize(:light_cyan) + "1-100?".colorize(:blue)) { |q| q.in("1-100") }
+            reps = $prompt.ask("How many #{i} will you do each day: ".colorize(:light_cyan) + "0-300?".colorize(:blue)) { |q| q.in("0-300") }
             #fills an array
             array << reps.to_i
         end
