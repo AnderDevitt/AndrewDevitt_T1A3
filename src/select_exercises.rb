@@ -3,7 +3,8 @@ def select_exercises
     system "clear"
     puts $font.write("Small Steps").colorize(:yellow) 
     puts "" 
-    puts "What are your exercise goals for this week?".colorize(:blue) 
+    puts "What are your exercise goals for this week?".colorize(:blue)
+    #puts "What are your exercise goals for this week?".colorize(:blue)  
     puts ""
     #Ask the user whether they wish to delete save files to begin a new week. If they choose no, they can overwrite the exercises and goals, but workout files will remain.
     puts "If you are ready to begin your new week, you will first need to delete the data from the last week."
@@ -15,10 +16,15 @@ def select_exercises
         FileUtils.rm_rf(Dir['./saves/*'])
     
         system "clear"
+        puts $font.write("Small Steps").colorize(:yellow) 
+        puts "" 
+        #New exercises can be added by adding them to the array. This also allows the future possibility of editing the list as an app feature!
+        exercise_list = ["Pushups", "Tricep presses", "Situps", "Crunches", "Leg-raises", "Lunges", "Squats", "Jairo's Burpees"]
+        puts "Scroll down to see more exercises"
         puts ""
-
         #display a multiple-choice menu of exercises and saves choices to a file
-        exercise = $prompt.multi_select("Select the exercises you would like to do this week.".colorize(:light_cyan), ["Pushups", "Tricep pressess", "Situps", "Crunches", "Leg-raises", "Lunges", "Squats"])
+        exercise = $prompt.multi_select("Select the exercises you would like to do this week.".colorize(:light_cyan), exercise_list)
+        
         #create a file to store an array for exercises
         File.open("./saves/Exercise.txt", "w") do |f|
             exercise.each { |element| f.puts(element) }

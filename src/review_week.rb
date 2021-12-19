@@ -2,7 +2,7 @@ def review_week
   system "clear"
   puts $font.write("Small Steps").colorize(:yellow) 
         puts "" 
-        puts "Welcome to the Small Steps workout motivator."
+        puts "Well done! Below are the results of your workouts this week.".colorize(:blue)
         puts ""
   arr = []
   read_array =[]

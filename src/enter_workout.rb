@@ -3,7 +3,7 @@ def enter_workout()
     system "clear"
     puts $font.write("Small Steps").colorize(:yellow) 
         puts "" 
-        puts "Welcome to the Small Steps workout motivator."
+        puts "Select the day that you wish to record a workout for. You will then be prompted to enter the number of repetitions you have completed for each exercise for the day.".colorize(:blue)
         puts ""
     array = []
     

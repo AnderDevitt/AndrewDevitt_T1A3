@@ -32,7 +32,7 @@ else
         system "clear"
         puts $font.write("Small Steps").colorize(:yellow) 
         puts "" 
-        puts "Welcome to the Small Steps workout motivator."
+        puts "Welcome to the Small Steps workout motivator. Our goal is to help you to begin your exercise journey with small, manageable goals that you can track and attain each week. - Best of luck!".colorize(:blue)
         puts ""
 
         #invokes the menu and stores the option in the variable
