@@ -1,6 +1,10 @@
 #selects the exercises the user wants to do and sets their target repetitions
 def select_exercises
     system "clear"
+    puts font.write("Small Steps").colorize(:yellow) 
+    puts "" 
+    puts "Select the exercises"
+    puts ""
     #Ask the user whether they wish to delete save files to begin a new week. If they choose no, they can overwrite the exercises and goals, but workout files will remain.
     delete = false
     delete = $prompt.yes?("Would you like to delete the save data and start a new week?")

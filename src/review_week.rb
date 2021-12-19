@@ -1,4 +1,9 @@
 def review_week
+  system "clear"
+  puts font.write("Small Steps").colorize(:yellow) 
+        puts "" 
+        puts "Welcome to the Small Steps workout motivator."
+        puts ""
   arr = []
   read_array =[]
   #get the names of files in the save directory

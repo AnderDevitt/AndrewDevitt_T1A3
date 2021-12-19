@@ -1,6 +1,10 @@
 #enter the workout for the day
 def enter_workout()
     system "clear"
+    puts font.write("Small Steps").colorize(:yellow) 
+        puts "" 
+        puts "Welcome to the Small Steps workout motivator."
+        puts ""
     array = []
     
     #check which day it is

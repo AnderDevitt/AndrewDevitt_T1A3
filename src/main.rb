@@ -30,7 +30,7 @@ else
     while option != "Exit"
         #display app heading and greeting on every screen
         system "clear"
-        puts font.write("Small Steps")
+        puts font.write("Small Steps").colorize(:yellow) 
         puts "" 
         puts "Welcome to the Small Steps workout motivator."
         puts ""
