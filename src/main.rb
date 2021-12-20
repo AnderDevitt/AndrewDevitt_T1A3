@@ -2,8 +2,7 @@ require "tty-prompt"
 require "colorize"
 require "tty-font"
 require 'fileutils'
-require 'tty-table'
-require "pp"
+
 
 require_relative "./select_exercises.rb"
 require_relative "./enter_workout.rb"

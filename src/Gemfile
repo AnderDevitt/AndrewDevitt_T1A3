@@ -14,4 +14,4 @@ gem "rspec"
 
 gem "tty-font"
 
-gem "tty-table"
+gem 'fileutils'
