@@ -19,11 +19,11 @@ font = TTY::Font.new(:doom)
 #accept and handle command line arguments
 # Allows for quick access to individual functions without running the whole program
 if ARGV[0] == "goals"
-    select_exercises()
+    select_exercises(prompt, font)
 elsif ARGV[0] == "workout"
-    enter_workout()
+    enter_workout(prompt, font)
 elsif ARGV[0] == "results"
-    review_week()
+    review_week(font)
 else
     #display the main menu and program operation as usual
     option = ""
@@ -44,34 +44,11 @@ else
                 #call a function to choose exercises and target repetitions
                 select_exercises(prompt, font)
             when "Enter today's workout"
-                #-------------------------------------------------------------ERROR HANDLING
-                #Ruby function to check file existence
-                if(File.file?("./saves/Exercise.txt")) 
-                    #call a function to enter the day and reps completed
-                    enter_workout(prompt, font)
-                else
-                    #if the exercise.txt file is missing the function cannot be used and user should be directed to the enter goals function to create one  
-                    puts "Exercise.txt file not found.".colorize(:yellow)
-                    puts ""
-                    puts ""
-                    puts "Please set your exercise goals for the week before entering a workout for a day.".colorize(:light_cyan) 
-                end
+                #call a function to enter the day and reps completed
+                enter_workout(prompt, font)
             when "Review the week"
-                #-------------------------------------------------------------ERROR HANDLING
-                #Ruby function to check file existence
-                if(File.file?("./saves/Exercise.txt")) 
-                    #call a function to display all data for the week in a table
-                    review_week(font)
-                else
-                    #if the exercise.txt file is missing the function cannot be used  
-                    puts ""
-                    puts ""
-                    puts "Exercise.txt file not found.".colorize(:yellow)
-                    puts ""
-                    puts ""
-                    puts "You cannot review the week without having set your exercises and goals".colorize(:light_cyan)
-                    puts "Please set your goals to continue".colorize(:light_cyan) 
-                end    
+                #call a function to display all data for the week in a table
+                review_week(font)
             else   
                 system "clear"
                 puts "See you next time..."  
@@ -82,7 +59,7 @@ else
         #stop the menu from appearing straight away after responding to an option choice
         puts ""
         puts ""
-        print "Press any key to continue..."
+        print "Press any key to continue...".colorize(:yellow)
         STDIN.getch
         system "clear"
     end
