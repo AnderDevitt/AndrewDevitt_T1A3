@@ -10,4 +10,4 @@ bundle install
 #clear the screen
 clear
 #run the program
-ruby main.rb
+ruby main.rb $1
