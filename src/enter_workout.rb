@@ -1,14 +1,14 @@
 #enter the workout for the day
-def enter_workout()
+def enter_workout(prompt, font)
     system "clear"
-    puts $font.write("Small Steps").colorize(:yellow) 
+    puts font.write("Small Steps").colorize(:yellow) 
         puts "" 
         puts "Select the day that you wish to record a workout for. You will then be prompted to enter the number of repetitions you have completed for each exercise for the day.".colorize(:blue)
         puts ""
     array = []
     
     #check which day it is
-    day = $prompt.select("What day is it?".light_cyan, ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"])
+    day = prompt.select("What day is it?".light_cyan, ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"])
         
     #open the exercises file and read the exercises into an array
     file = File.open("./saves/Exercise.txt")
@@ -22,7 +22,7 @@ def enter_workout()
         puts ""
         #-------------------------------------------------------------ERROR HANDLING is included in the prompt
         #prompt the user for the number of repetitions done today for an exercise. Displays error message if number not between 1 and 100
-        answer = $prompt.ask("How many #{i} did you do today: ".colorize(:light_cyan) + "0-300?".colorize(:blue)) { |q| q.in("0-300") }
+        answer = prompt.ask("How many #{i} did you do today: ".colorize(:light_cyan) + "0-300?".colorize(:blue)) { |q| q.in("0-300") }
         #fills an array
         array << answer.to_i
     end
