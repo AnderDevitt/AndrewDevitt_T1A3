@@ -1,8 +1,8 @@
 #setup requirements for the program and run it
 #ideal for the first time running on your computer
 
-#remove Gemfile.lock
-rm Gemfile.lock
+#remove Gemfile.lock (disabled as .gitignore file was working)
+#rm Gemfile.lock
 #install Bundle
 gem install bundle
 #install the Ruby gems for the program

@@ -13,7 +13,7 @@ def review_week(font)
         read_array =[]
         #get the names of files in the save directory
         file_array = Dir[ './saves/*' ].select{ |f| File.file? f }.map{ |f| File.basename f}
-        sort_order = ["Exercise.txt", "Goal.txt", "Monday.txt", "Tuesday.txt", "Wednesday.txt", "Thursday.txt", "Friday.txt"]
+        sort_order = ["Exercise.txt", "Goal.txt", "Monday.txt", "Tuesday.txt", "Wednesday.txt", "Thursday.txt", "Friday.txt", "Saturday.txt", "Sunday.txt"]
         #sort the file_array to match sort_order array
         file_array = file_array.sort_by {|m| sort_order.index m}
         headings = file_array.map{|i| i.chomp(".txt")}
